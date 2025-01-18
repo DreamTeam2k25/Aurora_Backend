@@ -1,3 +1,3 @@
 from .user import User
 from .student import Student
-from .guild_member import GuildMember, Office
+from .guild_member import GuildMemberData, Office

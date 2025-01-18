@@ -1,1 +1,2 @@
-from .user import CustomTokenObtainPairSerializer
+from .user import CustomTokenObtainPairSerializer, UserSerializer
+from .student import StudentSerializer

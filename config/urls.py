@@ -15,9 +15,12 @@ from drf_spectacular.views import (
     SpectacularSwaggerView,
 )
 
-from core.authentication.views import CustomTokenObtainPairView
+from core.authentication.views import CustomTokenObtainPairView, StudentViewSet
+
 
 router = DefaultRouter()
+
+router.register(r'students', StudentViewSet)
 
 urlpatterns = [
     path('admin/', admin.site.urls),

@@ -5,6 +5,8 @@ class User(AbstractUser):
     name = models.CharField(max_length=255)
     email = models.EmailField(unique=True)
     username = models.CharField(max_length=255, unique=True)
+    last_login = models.DateTimeField(auto_now=True)
+    date_joined = models.DateTimeField(auto_now_add=True)
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['username']
