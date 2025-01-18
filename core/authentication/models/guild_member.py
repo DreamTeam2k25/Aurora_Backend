@@ -9,8 +9,8 @@ class Office(models.Model):
 
 class GuildMemberData(models.Model):
     student = models.OneToOneField(Student, on_delete=models.CASCADE)
-    office = models.ForeignKey(Office, on_delete=models.CASCADE)
-    year_active = models.IntegerField()
+    office = models.ForeignKey(Office, on_delete=models.CASCADE, default=None)
+    year_active = models.IntegerField(auto_created=True)
     
 
     def __str__(self):

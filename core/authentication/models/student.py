@@ -35,7 +35,7 @@ class Student(models.Model):
     ]
     curso = models.CharField(max_length=20, choices=CURSO_CHOICES)
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    is_guild_member = models.BooleanField(default=False)
+    is_guild_member = models.BooleanField(default=False, null=True)
 
     def __str__(self):
         return self.matricula
