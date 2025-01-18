@@ -16,6 +16,8 @@ from drf_spectacular.views import (
     SpectacularSwaggerView,
 )
 
+from core.authentication.utils import UpdateMemberDataView
+
 from core.authentication.views import CustomTokenObtainPairView, StudentViewSet, UserViewSetList
 
 # criar rota para atribuir alguem ao gremio a função já existe nos utils de autencation e centralizar a função de descobrir turma na utils o arquivo já existe porem nestá vazio veja exemplo nos serializer
@@ -41,6 +43,7 @@ urlpatterns = [
     ),
     path('api/token/', CustomTokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
+    path('api/students/<int:student_id>/<int:office_id>/', UpdateMemberDataView.as_view(), name='update_member_guild_data'),
     path('', lambda request: redirect('api/', permanent=True)),
 ]
 

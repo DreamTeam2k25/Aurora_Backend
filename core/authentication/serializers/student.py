@@ -1,5 +1,6 @@
 from rest_framework import serializers
 from core.authentication.models import Student, User, guild_member
+from core.authentication.utils import select_course_by_turma
 from core.authentication.serializers import UserSerializer
 from django.db import transaction
 
@@ -20,12 +21,7 @@ class StudentSerializer(serializers.ModelSerializer):
 
                 # Definindo o curso com base na turma
                 turma = validated_data.get("turma", "")
-                if turma in ['1info1', '1info2', '1info3', '2info1', '2info2', '2info3', '3info1', '3info2', '3info3']:
-                    validated_data["curso"] = "informatica"
-                elif turma in ['1agro1', '1agro2', '1agro3', '2agro1', '2agro2', '2agro3', '3agro1', '3agro2', '3agro3']:
-                    validated_data["curso"] = "agropecuaria"
-                elif turma in ['1quimi', '2quimi', '3quimi']:
-                    validated_data["curso"] = "quimica"
+                validated_data["curso"] = select_course_by_turma(turma)
 
                 # Criando o estudante
                 student = Student.objects.create(user=user, **validated_data)
