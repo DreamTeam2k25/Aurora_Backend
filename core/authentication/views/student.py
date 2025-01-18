@@ -74,16 +74,5 @@ class StudentViewSet(viewsets.ModelViewSet):
             
             return Response({'error': f'Erro ao criar estudante: {str(e)}'}, status=status.HTTP_400_BAD_REQUEST)
         
-    def update(self, request, *args, **kwargs):
-        try:
-            return super().update(request, *args, **kwargs)
-        except Exception as e:
-            if isinstance(e, ValueError) and hasattr(e, 'detail'):
-                error_details = e.detail
-                errors = {}
-                for field, messages in error_details.items():
-                    errors[field] = [str(msg) for msg in messages]
-                return Response({'errors': errors}, status=status.HTTP_400_BAD_REQUEST)  # Certifique-se de retornar uma resposta.
-            return Response({'error': f'Erro ao atualizar estudante: {str(e)}'}, status=status.HTTP_400_BAD_REQUEST)
         
     
