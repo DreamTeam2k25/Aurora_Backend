@@ -1,5 +1,0 @@
-{
-    "python.analysis.extraPaths": [
-        "./__pypackages__/3.12/lib"
-    ]
-}
