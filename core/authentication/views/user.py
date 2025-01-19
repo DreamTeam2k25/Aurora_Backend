@@ -22,7 +22,7 @@ class UserViewSetList(viewsets.ModelViewSet):
     lookup_field = 'id'
     filterset_class = UserFilter 
 
-    http_method_names = ['get']
+    http_method_names = ['get', 'delete']
 
     ordering_fields = ['id']
     ordering = ['id']

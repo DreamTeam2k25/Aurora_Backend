@@ -17,6 +17,8 @@ class UpdateMemberDataView(APIView):
             )
 
         GuildMemberData.objects.create(student=student, office=office)
+        student.is_guild_member = True
+        student.save()
         return Response({"detail": "Registro criado com sucesso."}, status=status.HTTP_201_CREATED)
 
     def delete(self, request, student_id, office_id):
