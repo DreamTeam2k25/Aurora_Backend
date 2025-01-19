@@ -14,6 +14,10 @@ dependencies = [
     "python-dotenv>=1.0.1",
     "djangorestframework-simplejwt>=5.4.0",
     "django-filter>=24.3",
+    "Pillow>=11.1.0",
+    "python-magic>=0.4.27; sys_platform == \"linux\"",
+    "python-magic-bin; sys_platform == \"win32, darwin\"",
+    "django-cloudinary-storage>=0.3.0",
 ]
 requires-python = ">=3.12"
 readme = "README.md"

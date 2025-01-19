@@ -5,7 +5,8 @@ from core.authentication.models import User
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ['id', 'username', 'email', 'name', 'last_login', 'date_joined']
+        fields = ['id', 'username', 'email', 'name', 'last_login', 'date_joined', 'perfil']
+        depth = 2
     
 class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
     def validate(self, attrs):

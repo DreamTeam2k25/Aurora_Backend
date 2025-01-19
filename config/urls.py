@@ -20,6 +20,9 @@ from core.authentication.utils import UpdateMemberDataView
 
 from core.authentication.views import CustomTokenObtainPairView, StudentViewSet, UserViewSetList
 
+from core.uploader.router import router as uploader_router
+
+
 # criar rota para atribuir alguem ao gremio a função já existe nos utils de autencation e centralizar a função de descobrir turma na utils o arquivo já existe porem nestá vazio veja exemplo nos serializer
 
 router = DefaultRouter()
@@ -30,6 +33,7 @@ router.register(r'users', UserViewSetList)
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include(router.urls)),
+    path('api/media/', include(uploader_router.urls)),
     path("api/schema/", SpectacularAPIView.as_view(), name="schema"),
     path(
         "api/swagger/",
@@ -47,4 +51,5 @@ urlpatterns = [
     path('', lambda request: redirect('api/', permanent=True)),
 ]
 
-urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+urlpatterns += static(settings.MEDIA_ENDPOINT, document_root=settings.MEDIA_ROOT)
+

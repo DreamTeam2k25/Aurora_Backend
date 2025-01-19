@@ -1,5 +1,6 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
+from core.uploader.models import Image
 
 class User(AbstractUser):
     name = models.CharField(max_length=255)
@@ -7,6 +8,14 @@ class User(AbstractUser):
     username = models.CharField(max_length=255, unique=True)
     last_login = models.DateTimeField(auto_now=True)
     date_joined = models.DateTimeField(auto_now_add=True)
+    perfil = models.ForeignKey(
+        Image,
+        related_name="+",
+        on_delete=models.CASCADE,
+        null=True,
+        blank=True,
+        default=None,
+    )
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['username']
