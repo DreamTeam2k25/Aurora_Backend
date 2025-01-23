@@ -1,5 +1,6 @@
 from django.db import models
-from core.authentication.models import User
+from core.authentication.models import Student
+from datetime import datetime
 
 class Office(models.Model):
     name = models.CharField(max_length=255)
@@ -7,10 +8,16 @@ class Office(models.Model):
     def __str__(self):
         return self.name
 
-class GuildMember(models.Model):
-    year_operation = models.IntegerField()
-    office = models.ForeignKey(Office, on_delete=models.CASCADE)
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+class GuildMemberData(models.Model):
+    student = models.OneToOneField(Student, on_delete=models.CASCADE)
+    office = models.ForeignKey(Office, on_delete=models.CASCADE, default=None)
+    year_active = models.IntegerField()
+    
+    def save(self, *args, **kwargs):
+        if not self.year_active:
+            self.year_active = datetime.now().year
+        super().save(*args, **kwargs)
+    
 
     def __str__(self):
-        return self.user.email
+        return self.student.user.name

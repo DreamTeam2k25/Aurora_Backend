@@ -7,12 +7,12 @@ class Student(models.Model):
         ('1info1', '1info1'),
         ('1info2', '1info2'),
         ('1info3', '1info3'),
-        ('2info1', '1info1'),
-        ('2info2', '1info2'),
-        ('2info3', '1info3'),
-        ('3info1', '1info1'),
-        ('3info2', '1info2'),
-        ('3info3', '1info3'),
+        ('2info1', '2info1'),
+        ('2info2', '2info2'),
+        ('2info3', '2info3'),
+        ('3info1', '3info1'),
+        ('3info2', '3info2'),
+        ('3info3', '3info3'),
         ('1agro1', '1agro1'),
         ('1agro2', '1agro2'),
         ('1agro3', '1agro3'),
@@ -35,6 +35,7 @@ class Student(models.Model):
     ]
     curso = models.CharField(max_length=20, choices=CURSO_CHOICES)
     user = models.OneToOneField(User, on_delete=models.CASCADE)
+    is_guild_member = models.BooleanField(default=False, null=True)
 
     def __str__(self):
-        return self.matricula
+        return self.user.name
