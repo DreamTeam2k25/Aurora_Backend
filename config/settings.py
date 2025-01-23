@@ -6,6 +6,8 @@ SECRET_KEY = 'django-insecure-en@8wgr_71l$h0tcm6av6b_-w5ojfzr_wc*%9e_^o^=by*xssl
 DEBUG = True
 ALLOWED_HOSTS = []
 
+MODE = "MIGRATE"
+
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -13,6 +15,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'cloudinary_storage',
+    'cloudinary',
     "rest_framework",
     'django_filters',
     'core.aurora',
@@ -87,8 +91,6 @@ USE_I18N = True
 
 USE_TZ = True
 
-STATIC_URL = 'static/'
-
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 CORS_ALLOW_ALL_ORIGINS = True 
@@ -151,8 +153,21 @@ SIMPLE_JWT = {
 
 
 # Media settings
+STATIC_URL = 'static/'
 
-MEDIA_URL = "http://localhost:8000/media/"
+print(MODE)
+if MODE in ["PRODUCTION", "MIGRATE"]:
+    CLOUDINARY_URL = 'cloudinary://658545447794538:mPIsb2z-yvKnWQvdfktq67HCHcY@dckvtvzjg'
+    DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+    STATIC_ROOT = os.path.join(BASE_DIR, "static")
+    STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+    MEDIA_URL = '/media/'
+else:
+    MY_IP = os.getenv("MY_IP", "127.0.0.1")
+    MEDIA_URL = f"http://{MY_IP}:19003/media/"
+    
 MEDIA_ENDPOINT = "/media/"
 MEDIA_ROOT = os.path.join(BASE_DIR, "media/")
 FILE_UPLOAD_PERMISSIONS = 0o640
+
+
