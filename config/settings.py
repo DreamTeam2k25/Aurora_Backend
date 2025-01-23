@@ -20,7 +20,7 @@ INSTALLED_APPS = [
     "corsheaders",
     'drf_spectacular',
     'rest_framework_simplejwt',
- ]
+]
 
 AUTH_USER_MODEL = "authentication.User"
 

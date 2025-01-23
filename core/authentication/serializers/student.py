@@ -1,8 +1,6 @@
 from rest_framework import serializers
-from core.authentication.models import Student, User, guild_member
-from core.authentication.utils import select_course_by_turma
+from core.authentication.models import Student, User
 from core.authentication.serializers import UserSerializer
-from django.db import transaction
 
 class StudentSerializer(serializers.ModelSerializer):
     user = UserSerializer()
@@ -12,20 +10,18 @@ class StudentSerializer(serializers.ModelSerializer):
         fields = ['id', 'matricula', 'curso', 'turma', 'is_guild_member', 'user']
         read_only_fields = ['curso', 'is_guild_member']
 
-    def create(self, validated_data):
-        with transaction.atomic():
-            try:
-                # Criando o usuário
-                user_data = validated_data.pop('user')
-                user = User.objects.create(**user_data)
+    def validate_turma(self, value):
+        valid_turmas = dict(Student.TURMA_CHOICES).keys()
+        if value not in valid_turmas:
+            raise serializers.ValidationError("Turma inválida")
+        return value
 
-                # Definindo o curso com base na turma
-                turma = validated_data.get("turma", "")
-                validated_data["curso"] = select_course_by_turma(turma)
+    def validate_matricula(self, value):
+        if len(value) < 5:
+            raise serializers.ValidationError("Matrícula deve ter pelo menos 5 caracteres")
+        return value
 
-                # Criando o estudante
-                student = Student.objects.create(user=user, **validated_data)
-                return student
-
-            except Exception as e:
-                raise serializers.ValidationError(f"Erro ao criar o estudante: {e}")
+    def validate(self, data):
+        if Student.objects.filter(matricula=data.get('matricula')).exists():
+            raise serializers.ValidationError("Já existe um estudante com esta matrícula")
+        return data
