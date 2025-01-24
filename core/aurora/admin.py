@@ -1,3 +1,6 @@
 from django.contrib import admin
 
-# Register your models here.
+from core.aurora.models import PostImage, Posts
+
+admin.site.register(Posts)
+admin.site.register(PostImage)
