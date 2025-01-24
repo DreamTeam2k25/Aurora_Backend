@@ -20,12 +20,13 @@ from core.authentication.utils import UpdateMemberDataView
 
 from core.authentication.views import CustomTokenObtainPairView, StudentViewSet, UserViewSetList
 
-# criar rota para atribuir alguem ao gremio a função já existe nos utils de autencation e centralizar a função de descobrir turma na utils o arquivo já existe porem nestá vazio veja exemplo nos serializer
+from core.uploader.views import ImageViewSet
 
 router = DefaultRouter()
 
 router.register(r'students', StudentViewSet)
 router.register(r'users', UserViewSetList)
+router.register(r'images', ImageViewSet)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
