@@ -36,6 +36,7 @@ distribution = true
 dev = "python manage.py runserver"
 runserver = "python manage.py runserver"
 createsuperuser = "python manage.py createsuperuser"
+changepassword = "python manage.py changepassword"
 migrate = "python manage.py migrate"
 makemigrations = "python manage.py makemigrations"
 shell = "python manage.py shell"
