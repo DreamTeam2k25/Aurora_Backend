@@ -16,6 +16,9 @@ dependencies = [
     "django-filter>=24.3",
     "cloudinary>=1.42.1",
     "django-cloudinary-storage>=0.3.0",
+    "pydotplus>=2.0.2",
+    "django-extensions>=3.2.3",
+    "graphviz>=0.20.3",
 ]
 requires-python = ">=3.12"
 readme = "README.md"
@@ -33,6 +36,7 @@ distribution = true
 dev = "python manage.py runserver"
 runserver = "python manage.py runserver"
 createsuperuser = "python manage.py createsuperuser"
+changepassword = "python manage.py changepassword"
 migrate = "python manage.py migrate"
 makemigrations = "python manage.py makemigrations"
 shell = "python manage.py shell"

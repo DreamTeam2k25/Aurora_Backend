@@ -1,6 +1,5 @@
 from pathlib import Path
 import os
-import environ
 import cloudinary
 import cloudinary.uploader
 import cloudinary.api
@@ -31,6 +30,7 @@ INSTALLED_APPS = [
     "corsheaders",
     'drf_spectacular',
     'rest_framework_simplejwt',
+    'django_extensions',
 ]
 
 AUTH_USER_MODEL = "authentication.User"
