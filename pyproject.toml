@@ -4,7 +4,8 @@ version = "0.1.0"
 description = "Default template for PDM package"
 authors = [
     {name = "AnthonyLoche", email = "anthonylocheifc@gmail.com"},
-    {name = "JonatasPeraza", email = "jonatassilvaperaza@gmail.com"}
+    {name = "JonatasPeraza", email = "jonatassilvaperaza@gmail.com"},
+    {name = "", email = ""},
 ]
 dependencies = [
     "django>=5.1.5",
@@ -20,17 +21,12 @@ dependencies = [
     "django-extensions>=3.2.3",
     "graphviz>=0.20.3",
 ]
-requires-python = ">=3.12"
+requires-python = "==3.12.*"
 readme = "README.md"
 license = {text = "MIT"}
 
-[build-system]
-requires = ["setuptools>=61", "wheel"]
-build-backend = "setuptools.build_meta"
-
-
 [tool.pdm]
-distribution = true
+distribution = false
 
 [tool.pdm.scripts]
 dev = "python manage.py runserver"
