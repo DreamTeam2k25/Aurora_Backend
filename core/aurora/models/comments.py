@@ -3,7 +3,7 @@ from core.authentication.models import User
 from core.aurora.models import Posts
 
 class Comments(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='estudante')
+    user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='user')
     post = models.ForeignKey(Posts, on_delete=models.CASCADE, verbose_name='post')
     comment = models.TextField()
     created_at = models.DateField(auto_now_add=True)
