@@ -20,7 +20,7 @@ from core.authentication.utils import UpdateMemberDataView
 
 from core.authentication.views import CustomTokenObtainPairView, StudentViewSet, UserViewSetList
 
-from core.uploader.views import ImageViewSet
+from core.uploader.views import ImageViewSet, DocumentViewSet
 
 from core.aurora.views import PostsViewSet, PostImageViewSet
 
@@ -29,6 +29,7 @@ router = DefaultRouter()
 router.register(r'students', StudentViewSet)
 router.register(r'users', UserViewSetList)
 router.register(r'images', ImageViewSet)
+router.register(r'documents', DocumentViewSet)
 router.register(r'posts', PostsViewSet)
 router.register(r'post-images', PostImageViewSet)
 
