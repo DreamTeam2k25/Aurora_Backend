@@ -22,7 +22,7 @@ from core.authentication.views import CustomTokenObtainPairView, StudentViewSet,
 
 from core.uploader.views import ImageViewSet
 
-from core.aurora.views import PostsViewSet, PostImageViewSet, CommentsViewSet
+from core.aurora.views import PostsViewSet, PostImageViewSet, CommentsViewSet, RepliesViewSet
 
 router = DefaultRouter()
 
@@ -32,6 +32,7 @@ router.register(r'images', ImageViewSet)
 router.register(r'posts', PostsViewSet)
 router.register(r'post-images', PostImageViewSet)
 router.register(r'comments', CommentsViewSet)
+router.register(r'replies', RepliesViewSet)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
