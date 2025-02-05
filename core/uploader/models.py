@@ -58,10 +58,8 @@ class Document(models.Model):
         super().save(*args, **kwargs)
         
     def __str__(self):
-        if self.description:
-            return self.description;
-        else: 
-            return f'image {self.id}'
+        return self.description or f"Image {self.id}"
+
         
     class Meta:
         verbose_name = "Document"

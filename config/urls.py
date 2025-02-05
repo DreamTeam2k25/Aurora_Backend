@@ -1,6 +1,5 @@
 from django.contrib import admin
 from django.urls import path, include
-from rest_framework.routers import DefaultRouter
 from django.conf import settings
 from django.conf.urls.static import static
 from django.shortcuts import redirect
@@ -18,21 +17,9 @@ from drf_spectacular.views import (
 
 from core.authentication.utils import UpdateMemberDataView
 
-from core.authentication.views import CustomTokenObtainPairView, StudentViewSet, UserViewSetList
+from core.authentication.views import CustomTokenObtainPairView
 
-from core.uploader.views import ImageViewSet, DocumentViewSet
-
-from core.aurora.views import PostsViewSet, PostImageViewSet, CommentsViewSet
-
-router = DefaultRouter()
-
-router.register(r'students', StudentViewSet)
-router.register(r'users', UserViewSetList)
-router.register(r'images', ImageViewSet)
-router.register(r'documents', DocumentViewSet)
-router.register(r'posts', PostsViewSet)
-router.register(r'post-images', PostImageViewSet)
-router.register(r'comments', CommentsViewSet)
+from config.router import router
 
 urlpatterns = [
     path('admin/', admin.site.urls),
