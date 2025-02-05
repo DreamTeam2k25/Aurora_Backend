@@ -16,8 +16,8 @@ class Image(models.Model):
             "Used to retrieve the image itself. Should not be readable until the image is attached to another object."
         ),
     )
-    file = CloudinaryField('file', folder='media/users')  
-    description = models.CharField(max_length=255, blank=True)
+    file = CloudinaryField('file')  
+    description = models.TextField(null=True, blank=True)
     uploaded_on = models.DateTimeField(auto_now_add=True)
 
     def save(self, *args, **kwargs):
@@ -32,3 +32,37 @@ class Image(models.Model):
     class Meta:
         verbose_name = "Image"
         verbose_name_plural = "Images"
+        
+class Document(models.Model):
+    attachment_key = models.UUIDField(
+        max_length=255,
+        default=uuid.uuid4,
+        unique=True,
+        help_text=("Used to attach the image to another object. Cannot be used to retrieve the image file."),
+    )
+    public_id = models.CharField(
+        max_length=255,
+        unique=True,
+        help_text=(
+            "Used to retrieve the image itself. Should not be readable until the image is attached to another object."
+        ),
+    )
+    file = CloudinaryField('file')
+    description = models.TextField(null=True, blank=True)
+    uploaded_on = models.DateTimeField(auto_now_add=True)
+    
+    def save(self, *args, **kwargs):
+        if not self.public_id:  
+          
+            self.public_id = self.file.public_id  
+        super().save(*args, **kwargs)
+        
+    def __str__(self):
+        if self.description:
+            return self.description;
+        else: 
+            return f'image {self.id}'
+        
+    class Meta:
+        verbose_name = "Document"
+        verbose_name_plural = "Documents"
