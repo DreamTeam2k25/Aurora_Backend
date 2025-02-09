@@ -1,58 +1,23 @@
 from rest_framework import viewsets
-from core.authentication.models import Student, User
-from core.authentication.serializers import StudentSerializer
-import django_filters
+from core.authentication.models import Student
+from core.authentication.serializers import StudentDetailSerializer, StudentWriteSerializer
 from rest_framework.response import Response
+from core.authentication.filters import StudentFilter
 from rest_framework import status
 from django.db import transaction
 from core.authentication.utils import select_course_by_turma
 
-class StudentFilter(django_filters.FilterSet):
-    TURMA_CHOICES = [
-        ('1info1', '1info1'),
-        ('1info2', '1info2'),
-        ('1info3', '1info3'),
-        ('2info1', '2info1'),
-        ('2info2', '2info2'),
-        ('2info3', '2info3'),
-        ('3info1', '3info1'),
-        ('3info2', '3info2'),
-        ('3info3', '3info3'),
-        ('1agro1', '1agro1'),
-        ('1agro2', '1agro2'),
-        ('1agro3', '1agro3'),
-        ('2agro1', '2agro1'),
-        ('2agro2', '2agro2'),
-        ('2agro3', '2agro3'),
-        ('3agro1', '3agro1'),
-        ('3agro2', '3agro2'),
-        ('3agro3', '3agro3'),
-        ('1quimi', '1quimi'),
-        ('2quimi', '2quimi'),
-        ('3quimi', '3quimi'),
-    ]
-    
-    CURSO_CHOICES = [
-        ('informatica', 'Informatica Para Internet'),
-        ('quimica', 'Quimica'),
-        ('agropecuaria', 'Agropecuaria'),
-    ]
-    id = django_filters.NumberFilter()
-    matricula = django_filters.CharFilter(lookup_expr='icontains')
-    curso = django_filters.ChoiceFilter(choices=Student.CURSO_CHOICES)
-    turma = django_filters.ChoiceFilter(choices=Student.TURMA_CHOICES)
-
-    class Meta:
-        model = Student
-        fields = ['id', 'matricula', 'curso', 'turma']
-
 class StudentViewSet(viewsets.ModelViewSet):
     queryset = Student.objects.all()
-    serializer_class = StudentSerializer
     lookup_field = 'id'
     filterset_class = StudentFilter
     ordering_fields = ['matricula']
     ordering = ['matricula']
+    
+    def get_serializer_class(self):
+        if self.action in ['list', 'retrieve']:
+            return StudentDetailSerializer
+        return StudentWriteSerializer
 
     def list(self, request, *args, **kwargs):
         try:
@@ -67,14 +32,13 @@ class StudentViewSet(viewsets.ModelViewSet):
             serializer.is_valid(raise_exception=True)
             
             with transaction.atomic():
-                user_data = serializer.validated_data.pop('user')
-                user = User.objects.create(**user_data)
+                user_id = serializer.validated_data.pop('user')
 
                 turma = serializer.validated_data.get("turma", "")
                 curso = select_course_by_turma(turma)
                 
                 student = Student.objects.create(
-                    user=user,
+                    user=user_id,
                     curso=curso,
                     **serializer.validated_data
                 )
