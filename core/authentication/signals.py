@@ -1,7 +1,10 @@
 from django.db.models.signals import post_save
 from django.urls import reverse
 from django.dispatch import receiver
+
 from core.authentication.models import GuildMemberData, Student
+from core.authentication.utils import send_verification_email
+
 import uuid
 
 
@@ -17,9 +20,10 @@ def guild_verification(sender, instance, created, **kwargs):
         instance.verification_token = token
         instance.save()
     
-        verify_url = reverse('verify', kwargs={'verify_token': token})
+        verify_url = reverse('verify_member', kwargs={'verify_token': token})
         
         try:
             print(verify_url)
+            send_verification_email(member, verify_url)
         except Exception as e: 
             print("Erro ao enviar email de verificação:", str(e)) 

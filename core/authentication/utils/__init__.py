@@ -1,1 +1,2 @@
 from .turma_select import select_course_by_turma
+from .verification_email import send_verification_email
