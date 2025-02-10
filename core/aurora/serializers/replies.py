@@ -20,5 +20,5 @@ class ReplieOfReplieSerializer(ModelSerializer):
 
 class ReplieOfReplieCreateSerializer(ModelSerializer):
     class Meta:
-        model = ReplieOfReplie,
+        model = ReplieOfReplie
         fields = '__all__'

@@ -19,6 +19,7 @@ class Replies(models.Model):
 
 class ReplieOfReplie(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='user')
+    replyOfreply = models.TextField(default=None)
     comment_replie = models.ForeignKey(Replies, on_delete=models.CASCADE, verbose_name='comment_replie')
 
     def __str__(self):

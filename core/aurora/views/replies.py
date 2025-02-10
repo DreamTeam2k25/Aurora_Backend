@@ -17,7 +17,7 @@ class RepliesViewSet(ModelViewSet):
     
 class ReplieOfReplieViewSet(ModelViewSet):
     queryset = ReplieOfReplie.objects.all()
-    serializer_class = RepliesSerializer
+    serializer_class = ReplieOfReplieSerializer
 
     def get_serializer_class(self):
         if self.action == 'create':
