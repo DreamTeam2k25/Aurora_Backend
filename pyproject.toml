@@ -5,7 +5,8 @@ description = "Default template for PDM package"
 authors = [
     {name = "AnthonyLoche", email = "anthonylocheifc@gmail.com"},
     {name = "JonatasPeraza", email = "jonatassilvaperaza@gmail.com"},
-    {name = "", email = ""},
+    {name = "Gabz047", email = "gabe1612mail@gmail.com"},
+    {name = "luansilva25", email = "luansilva250807@gmail.com"},
 ]
 dependencies = [
     "django>=5.1.5",
@@ -21,7 +22,7 @@ dependencies = [
     "django-extensions>=3.2.3",
     "graphviz>=0.20.3",
 ]
-requires-python = "==3.12.*"
+requires-python = "==3.13.*"
 readme = "README.md"
 license = {text = "MIT"}
 
