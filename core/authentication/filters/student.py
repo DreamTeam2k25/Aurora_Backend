@@ -1,8 +1,7 @@
-from django.db import models
-from core.authentication.models import User
+from core.authentication.models import Student
+import django_filters
 
-class Student(models.Model):
-    matricula = models.CharField(max_length=255)
+class StudentFilter(django_filters.FilterSet):
     TURMA_CHOICES = [
         ('1info1', '1info1'),
         ('1info2', '1info2'),
@@ -26,15 +25,17 @@ class Student(models.Model):
         ('2quimi', '2quimi'),
         ('3quimi', '3quimi'),
     ]
-
-    turma = models.CharField(max_length=6, choices=TURMA_CHOICES)
+    
     CURSO_CHOICES = [
         ('informatica', 'Informatica Para Internet'),
         ('quimica', 'Quimica'),
         ('agropecuaria', 'Agropecuaria'),
     ]
-    curso = models.CharField(max_length=20, choices=CURSO_CHOICES)
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    id = django_filters.NumberFilter()
+    matricula = django_filters.CharFilter(lookup_expr='icontains')
+    curso = django_filters.ChoiceFilter(choices=Student.CURSO_CHOICES)
+    turma = django_filters.ChoiceFilter(choices=Student.TURMA_CHOICES)
 
-    def __str__(self):
-        return self.user.name
+    class Meta:
+        model = Student
+        fields = ['id', 'matricula', 'curso', 'turma']

@@ -2,13 +2,12 @@ from rest_framework import serializers
 from core.authentication.models import Student, User
 from core.authentication.serializers import UserSerializer
 
-class StudentSerializer(serializers.ModelSerializer):
-    user = UserSerializer()
-
+class StudentWriteSerializer(serializers.ModelSerializer):
+    
     class Meta:
         model = Student
-        fields = ['id', 'matricula', 'curso', 'turma', 'is_guild_member', 'user']
-        read_only_fields = ['curso', 'is_guild_member']
+        fields = ['id', 'matricula', 'curso', 'turma', 'user']
+        read_only_fields = ['curso']
 
     def validate_turma(self, value):
         valid_turmas = dict(Student.TURMA_CHOICES).keys()
@@ -25,3 +24,12 @@ class StudentSerializer(serializers.ModelSerializer):
         if Student.objects.filter(matricula=data.get('matricula')).exists():
             raise serializers.ValidationError("Já existe um estudante com esta matrícula")
         return data
+
+class StudentDetailSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Student
+        fields = ['id', 'matricula', 'curso', 'turma', 'user']
+        read_only_fields = ['curso']
+        depth = 1
+    
+
