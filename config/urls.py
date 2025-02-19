@@ -15,8 +15,7 @@ from drf_spectacular.views import (
     SpectacularSwaggerView,
 )
 
-
-from core.authentication.views import CustomTokenObtainPairView, verify_member
+from core.authentication.views import CustomTokenObtainPairView, verify_member, Verify
 
 from config.router import router
 
@@ -39,7 +38,8 @@ urlpatterns = [
     # rota para o front verificar se a pesso tem permisão(manter dados em cache)
     path('', lambda request: redirect('api/', permanent=True)),
     # rota para verificar o membro do grêmio
-    path('verify/<str:verify_token>', verify_member, name='verify_member')
+    path('verify_member/<str:verify_token>', verify_member, name='verify_member'),
+    path('verify_permission/<int:student_id>', Verify.as_view(), name='verify_permission')
 ]
 
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
