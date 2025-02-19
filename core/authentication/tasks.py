@@ -1,20 +1,30 @@
+from celery import shared_task
+from config.celery import app
 from django.core.mail import send_mail
-from core.authentication.models import Student, User
+from core.authentication.models import Student
 import os
 
-def send_verification_email(student, url):
+@shared_task
+def add(x, y):
+    value = x + y
+    print(f"Task executada: {value}")
+    return value
+
+@app.task(queue="emails")
+def send_verification_email_task(student_id, url):
+    student = Student.objects.get(id=student_id)
     member = student.user
     EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
     GUILD_EMAIL = os.getenv('GUILD_EMAIL')
     API_HOST_URL = os.getenv('API_HOST_URL')
-        
+
     from_email = EMAIL_HOST_USER
     recipient_list = [GUILD_EMAIL]
     verify_link = f'{API_HOST_URL}{url}'
 
     send_mail(
         subject='Verificação de novo membro',
-        message='Olá, este é um e-mail de verificação. Caso não consiga visualizar, favor abrir em um navegador.',  # Adiciona uma mensagem alternativa para clientes de e-mail que não suportam HTML
+        message='Olá, este é um e-mail de verificação. Caso não consiga visualizar, favor abrir em um navegador.',
         html_message=f'''
         <!DOCTYPE html>
         <html lang="pt-br">
@@ -92,14 +102,10 @@ def send_verification_email(student, url):
             </style>
         </head>
         <body>
-
             <div class="container">
-                <!-- Cabeçalho -->
                 <div class="header">
                     <h1>Verificação de novo membro</h1>
                 </div>
-
-                <!-- Conteúdo -->
                 <div class="content">
                     <h1>O estudante {member.name} deseja se tornar um membro no portal Aurora.</h1>
                     <p> Número de matrícula: {student.matricula} </p>
@@ -109,16 +115,18 @@ def send_verification_email(student, url):
                     <a href="{verify_link}" class="button">Verificar membro</a>
                     <p>Se ele não for membro, ignore este e-mail.</p>
                 </div>
-
-                <!-- Rodapé -->
                 <div class="footer">
                     <p>&copy; 2025 Aurora. Todos os direitos reservados.</p>
                 </div>
             </div>
-
         </body>
         </html>
         ''',
         from_email=from_email,
         recipient_list=recipient_list
     )
+
+@app.task(queue="emails")
+def send_email_task(email):
+    print(f"Enviando e-mail para {email}")
+    return True

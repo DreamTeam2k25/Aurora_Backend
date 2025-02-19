@@ -4,6 +4,7 @@ import cloudinary
 import cloudinary.uploader
 import cloudinary.api
 from dotenv import load_dotenv
+from datetime import timedelta
 
 load_dotenv()
 
@@ -145,7 +146,6 @@ REST_FRAMEWORK = {
     ],
 }
 
-from datetime import timedelta
 
 SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': timedelta(minutes=15),
@@ -172,3 +172,28 @@ cloudinary.config(
     api_key=API_KEY,
     api_secret=API_SECRET
 )
+
+CELERY_BROKER_URL = "amqp://anthony:anthony321@localhost:5672//"
+
+CELERY_RESULT_BACKEND = "django-db"
+
+INSTALLED_APPS += ["django_celery_results"]
+
+CELERY_ACCEPT_CONTENT = ["json"]
+CELERY_TASK_SERIALIZER = "json"
+
+CELERY_BROKER_CONNECTION_RETRY_ON_STARTUP = True
+
+TASK_ALWAYS_EAGER = False
+
+CELERY_TASK_QUEUES = {
+    'emails': {
+        'exchange': 'emails',
+        'routing_key': 'emails',
+        'queue_arguments': {'x-max-priority': 10, 'x-message-ttl': 60000}
+    }
+}
+
+CELERY_TASK_DEFAULT_QUEUE = 'emails'
+CELERY_TASK_DEFAULT_EXCHANGE = 'emails'
+CELERY_TASK_DEFAULT_ROUTING_KEY = 'emails'
