@@ -1,3 +1,3 @@
 from .user import CustomTokenObtainPairSerializer, UserSerializer
 from .student import StudentDetailSerializer, StudentWriteSerializer
-from .guild_member import GuildMemberDataSerializer
+from .guild_member import GuildMemberDataSerializer, ListGuildMemberDataSerializer
