@@ -6,3 +6,10 @@ class GuildMemberDataSerializer(serializers.ModelSerializer):
         model = GuildMemberData
         fields = ['id', 'office', 'student', 'year_active']
         read_only_fields = ['verified', 'verification_token']
+
+class ListGuildMemberDataSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = GuildMemberData
+        fields = ['id', 'office', 'student', 'year_active']
+        read_only_fields = ['verified', 'verification_token']
+        depth = 2
