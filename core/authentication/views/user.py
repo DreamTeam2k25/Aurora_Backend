@@ -1,7 +1,7 @@
 from core.authentication.filters import UserFilter
 from rest_framework_simplejwt.views import TokenObtainPairView
 from rest_framework import viewsets
-from core.authentication.serializers import CustomTokenObtainPairSerializer, UserSerializer
+from core.authentication.serializers import CustomTokenObtainPairSerializer, UserSerializer, UserUpdateSerializer
 
 from core.authentication.models import User
 
@@ -13,6 +13,11 @@ class UserViewSetList(viewsets.ModelViewSet):
     serializer_class = UserSerializer
     lookup_field = 'id'
     filterset_class = UserFilter 
+
+    def get_serializer_class(self):
+        if self.action == 'update':
+            return UserUpdateSerializer
+        return UserSerializer
 
     http_method_names = ['get', 'post', 'patch', 'put']
 

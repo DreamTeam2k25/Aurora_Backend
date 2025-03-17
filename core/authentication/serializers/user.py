@@ -1,12 +1,13 @@
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework import serializers
 from core.authentication.models import User
+from django.contrib.auth.hashers import make_password
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ['id', 'username', 'email', 'password', 'name', 'last_login', 'date_joined']
-
+    
     def validate_email(self, value):
         if User.objects.filter(email=value).exists():
             raise serializers.ValidationError("Este email já está em uso")
@@ -23,6 +24,19 @@ class UserSerializer(serializers.ModelSerializer):
         if len(value) < 3:
             raise serializers.ValidationError("Nome deve ter pelo menos 3 caracteres")
         return value
+    
+    def create(self, validated_data):
+        validated_data['password'] = make_password(validated_data['password'])
+        return validated_data
+    
+class UserUpdateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ['id', 'username', 'email', 'password', 'name', 'last_login', 'date_joined']
+
+    def update(self, instance, validated_data):
+        validated_data['password'] = make_password(validated_data['password'])
+        return validated_data
 
 class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
     def validate(self, attrs):
