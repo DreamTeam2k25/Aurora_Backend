@@ -2,3 +2,4 @@ from .posts import PostsListSerializer, PostsCreateSerializer, PostImagesSeriali
 from .comments import CommentsSerializer, CreateCommentSerializer
 from .replies import RepliesSerializer, CreateRepliesSerializer, ReplieOfReplieCreateSerializer, ReplieOfReplieSerializer
 from .reactions import ReactionsSerializer
+from .ombdusman import OmbdusmanSerializer, OmbdusmanCreateSerializer
