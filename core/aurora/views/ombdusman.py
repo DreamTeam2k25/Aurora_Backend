@@ -7,7 +7,7 @@ class PaginationOmbdusman(PageNumberPagination):
     page_size = 9
 
 class ObdusmanViewSet(ModelViewSet):
-    queryset = Ombdusman.objects.order_by('?')
+    queryset = Ombdusman.objects.order_by('-id')
     serializer_class = OmbdusmanSerializer
     pagination_class = PaginationOmbdusman
     
