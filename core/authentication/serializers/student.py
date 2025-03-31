@@ -30,6 +30,6 @@ class StudentDetailSerializer(serializers.ModelSerializer):
         model = Student
         fields = ['id', 'matricula', 'curso', 'turma', 'user']
         read_only_fields = ['curso']
-        depth = 1
+        depth = 1   
     
 

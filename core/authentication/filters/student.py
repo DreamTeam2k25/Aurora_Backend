@@ -35,7 +35,8 @@ class StudentFilter(django_filters.FilterSet):
     matricula = django_filters.CharFilter(lookup_expr='icontains')
     curso = django_filters.ChoiceFilter(choices=Student.CURSO_CHOICES)
     turma = django_filters.ChoiceFilter(choices=Student.TURMA_CHOICES)
+    user = django_filters.NumberFilter()
 
     class Meta:
         model = Student
-        fields = ['id', 'matricula', 'curso', 'turma']
+        fields = ['id', 'matricula', 'curso', 'turma', 'user']
